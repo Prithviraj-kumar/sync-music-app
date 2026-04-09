@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: sync-music-backend
+    runtime: node
+    repo: https://github.com/YOUR_USERNAME/sync-music-app
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: PORT
+        value: 8001
+      - key: CORS_ORIGINS
+        value: https://sync-music-app.vercel.app
+    plan: free
