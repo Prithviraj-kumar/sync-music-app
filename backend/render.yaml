@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: sync-music-backend
+    name: sync-music-app
     runtime: node
     repo: https://github.com/Prithviraj-kumar/sync-music-app
     buildCommand: cd backend && npm install
