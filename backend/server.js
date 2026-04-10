@@ -58,36 +58,50 @@ io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
   socket.on('join-room', ({ roomId, username }) => {
-    const room = getRoom(roomId);
-    
-    let role = 'listener';
-    if (!room.host) {
-      role = 'host';
-      room.host = socket.id;
-    } else if (!room.coHost) {
-      role = 'co-host';
-      room.coHost = socket.id;
+  const room = getRoom(roomId);
+  
+  console.log(`Room ${roomId} - Host: ${room.host}, CoHost: ${room.coHost}`);
+  console.log(`User ${username} (${socket.id}) joining`);
+  
+  let role = 'listener';
+  
+  // Pehla user - Host
+  if (room.host === null) {
+    role = 'host';
+    room.host = socket.id;
+    console.log(`${username} assigned as HOST`);
+  } 
+  // Doosra user - Co-Host
+  else if (room.coHost === null && room.host !== socket.id) {
+    role = 'co-host';
+    room.coHost = socket.id;
+    console.log(`${username} assigned as CO-HOST`);
+  }
+  // Baaki sab - Listener
+  else {
+    role = 'listener';
+    console.log(`${username} assigned as LISTENER`);
+  }
+  
+  const participant = { id: socket.id, username, role, audioEnabled: true, isSpeaking: false };
+  room.participants.push(participant);
+  socket.join(roomId);
+  socket.roomId = roomId;
+  socket.username = username;
+  
+  socket.emit('room-joined', {
+    userId: socket.id, role,
+    room: {
+      participants: room.participants,
+      currentSong: room.currentSong,
+      isPlaying: room.isPlaying,
+      currentTime: room.currentTime,
+      queue: room.queue,
+      messages: room.messages
     }
-    
-    const participant = { id: socket.id, username, role, audioEnabled: true, isSpeaking: false };
-    room.participants.push(participant);
-    socket.join(roomId);
-    socket.roomId = roomId;
-    socket.username = username;
-    
-    socket.emit('room-joined', {
-      userId: socket.id, role,
-      room: {
-        participants: room.participants,
-        currentSong: room.currentSong,
-        isPlaying: room.isPlaying,
-        currentTime: room.currentTime,
-        queue: room.queue,
-        messages: room.messages
-      }
-    });
-    socket.to(roomId).emit('user-joined', { participants: room.participants });
   });
+  socket.to(roomId).emit('user-joined', { participants: room.participants });
+});
 
   socket.on('webrtc-signal', ({ to, signal }) => {
     io.to(to).emit('webrtc-signal', { from: socket.id, signal });
