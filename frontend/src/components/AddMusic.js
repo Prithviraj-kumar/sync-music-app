@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Upload, Link2, Plus, Play, ListPlus, Music } from 'lucide-react';
-
-import { Music } from 'lucide-react';
 import axios from 'axios';
 
 const BACKEND_URL = 'https://sync-music-app.onrender.com';
