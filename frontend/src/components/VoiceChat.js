@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Mic, MicOff } from 'lucide-react';
+// import Peer from 'simple-peer';
 import Peer from 'simple-peer';
 
 function VoiceChat({ socket, roomId, userId, onVoiceActivity }) {
