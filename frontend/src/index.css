@@ -10,69 +10,65 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #040914;
-  color: white;
-  overflow-x: hidden;
+  background: #0f172a;
 }
 
-/* Mobile specific styles */
-@media (max-width: 768px) {
-  .mobile-fullscreen {
-    min-height: 100vh;
-    height: auto;
-  }
-  
-  .mobile-player {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-  }
-  
-  .mobile-chat-panel {
-    position: fixed;
-    bottom: 80px;
-    top: 60px;
-    right: 0;
-    left: 0;
-    z-index: 40;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-  }
-  
-  .mobile-chat-panel.open {
-    transform: translateX(0);
-  }
-  
-  .mobile-queue-panel {
-    position: fixed;
-    bottom: 80px;
-    top: 60px;
-    right: 0;
-    left: 0;
-    z-index: 40;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-  }
-  
-  .mobile-queue-panel.open {
-    transform: translateX(0);
-  }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
 }
 
-.animate-slide-up {
-  animation: slide-up 0.3s ease-out;
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Range Input Styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #10B981;
+  cursor: pointer;
+  margin-top: -4px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  background: #334155;
+  border-radius: 10px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
 }
